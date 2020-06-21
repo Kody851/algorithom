@@ -4,6 +4,7 @@
 #include <queue>
 using namespace std;
 //对大致有序的数组排序，每个数字移动范围都不会超过k，k远小于数组大小
+//借助优先队列
 void sortedArrDistanceLessK(vector<int>& arr, int k) {
     // 小顶堆
     priority_queue<int, vector<int>, greater<int> > heap;

@@ -2,11 +2,13 @@
 #include<iostream>
 #include<vector>
 using namespace std;
+//3种简单排序
 void mySwap(vector<int> &arr, int i, int j) {
 		int tmp = arr[i];
 		arr[i] = arr[j];
 		arr[j] = tmp;
 }
+//选择排序
 void selectionSort(vector<int>&arr) {
 	if (arr.empty() || arr.size() < 2) {
 		return;
@@ -20,6 +22,7 @@ void selectionSort(vector<int>&arr) {
 		mySwap(arr, i, minIndex);
 	}
 }
+//冒泡排序
 void bubbleSort(vector<int>&arr) {
 	if (arr.empty() || arr.size() < 2) {
 		return;
@@ -32,6 +35,7 @@ void bubbleSort(vector<int>&arr) {
 		}
 	}
 }
+//插入排序
 void insertionSort(vector<int>&arr) {
 	if (arr.empty() || arr.size() < 2) {
 		return;
