@@ -47,14 +47,54 @@ public:
         stk.push(head);
         while(!stk.empty()){
             TreeNode* cur = stk.top();
-            cout<<cur->val<<" ";
             stk.pop();
+            cout<<cur->val<<" ";
             if(cur->right){
                 stk.push(cur->right);
             }
             if(cur->left){
                 stk.push(cur->left);
             }
+        }
+    }
+    //非递归，中序
+    void inOrderUnRecur(TreeNode* head) {
+        if(!head) return;
+        stack<TreeNode*>s;
+        TreeNode* cur = head;
+        while(cur || !s.empty()){
+            if(cur){
+                s.push(cur);
+                cur = cur->left;
+            }
+            else{
+                cout<<s.top()->val<<" ";
+                s.pop();
+                cur = cur->right;
+            } 
+        } 
+    }
+    //非递归，后序
+    void posOrderUnRecur(TreeNode* head) {
+        if(!head) return;
+        stack<TreeNode*>s1;
+        stack<TreeNode*>s2;
+        s1.push(head);
+        //根右左，压入辅助栈，再弹出
+        while(!s1.empty()){
+            TreeNode* cur = s1.top();
+            s1.pop();
+            s2.push(cur);
+            if(cur->left){
+                s1.push(cur->left);
+            }
+            if(cur->right){
+                s1.push(cur->right);
+            }
+        }
+        while(!s2.empty()){
+            cout<<s2.top()->val<<" ";
+            s2.pop();
         }
     }
 };
@@ -75,8 +115,15 @@ int main(){
     cout<<", ";
     cout<<"post-order: ";
     solu.posOrderRecur(head);
+    cout<<"\n";
     cout<<"==============unrecursive==============\n";
     cout<<"pre-order: ";
     solu.preOrderUnRecur(head);
+    cout<<", ";
+    cout<<"in-order: ";
+    //solu.inOrderUnRecur(head);
+    cout<<", ";
+    cout<<"post-order: ";
+    solu.posOrderUnRecur(head);
     return 0;
 }
