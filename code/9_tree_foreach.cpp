@@ -1,5 +1,5 @@
 #include<iostream>
-#include<vector>
+#include<queue>
 #include<stack>
 using namespace std;
 
@@ -97,6 +97,47 @@ public:
             s2.pop();
         }
     }
+    //层次遍历（宽度优先遍历）
+    void levelForeach(TreeNode* head){
+        if(!head) return;
+        queue<TreeNode*>q;
+        q.push(head);
+        while(!q.empty()){
+            TreeNode* cur = q.front();
+            q.pop();
+            cout<<cur->val<<" ";
+            if(cur->left){
+                q.push(cur->left);
+            }
+            if(cur->right){
+                q.push(cur->right);
+            }
+        }
+    }
+    //利用层次遍历，求树的宽度
+    int levelForeachWidth(TreeNode* head){
+        if(!head) return 0;
+        queue<TreeNode*>q;
+        q.push(head);
+        int max = 0;
+        while(!q.empty()){
+            int n = q.size();
+            max = n>max ? n : max;
+            for(int i=0;i<n;i++){
+                TreeNode* cur = q.front();
+                q.pop();
+                //cout<<cur->val<<" ";
+                if(cur->left){
+                    q.push(cur->left);
+                }
+                if(cur->right){
+                    q.push(cur->right);
+                }
+            }
+            
+        }
+        return max;
+    }
 };
 
 int main(){
@@ -125,5 +166,11 @@ int main(){
     cout<<", ";
     cout<<"post-order: ";
     solu.posOrderUnRecur(head);
+    cout<<"\n";
+    cout<<"==============层次遍历==============\n";
+    cout<<"leval-order: ";
+    solu.levelForeach(head);
+    cout<<"\n";
+    cout<<"树的宽度： "<<solu.levelForeachWidth(head);
     return 0;
 }
