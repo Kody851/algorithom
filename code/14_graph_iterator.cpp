@@ -5,6 +5,8 @@
 #include<unordered_set>
 #include<unordered_map>
 using namespace std;
+//图的BFS和DFS
+
 //https://github.com/Kody851/Get-offer/blob/master/leetcode%20207.cpp
 class Solution{
     public:
@@ -102,7 +104,7 @@ int main(){
         cout<<i<<" ";
     }
     cout<<"\n BFS: \n";
-    //solu.graphBfsTable(edge,vexs);
+    solu.graphBfsTable(edge,vexs);
     cout<<"\n DFS: \n";
     solu.graphDfsTable(edge,vexs);
     //vector<int>a{1,2};
