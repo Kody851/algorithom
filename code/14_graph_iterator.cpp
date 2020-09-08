@@ -37,10 +37,8 @@ class Solution{
         void graphBfsMatrix(vector<vector<int>>& edge, vector<int>vexs){//给了节点数组
             int num = vexs.size();
             vector<vector<int>>mat(num, vector<int>(num,0));//邻接矩阵
-            for(int i=0;i<num;i++){
-                for(int j=0;j<num;j++){
-                    mat[edge[i][0]][edge[i][1]]=1;//x->y存在有向边，则为1
-                }
+            for(int i=0;i<edge.size();i++){
+                mat[edge[i][0]][edge[i][1]]=1;//x->y存在有向边，则为1
             }
             queue<int>q;
             unordered_set<int>visited;
@@ -53,7 +51,7 @@ class Solution{
                         q.pop();
                         cout<<vexs[cur];//pop之后打印
                         for(int j=0;j<num;j++){
-                            if(visited.find(j)==visited.end() && mat[i][j]==1){
+                            if(visited.find(j)==visited.end() && mat[cur][j]==1){
                                 visited.insert(j);
                                 q.push(j);
                             }
@@ -105,6 +103,9 @@ int main(){
     }
     cout<<"\n BFS: \n";
     solu.graphBfsTable(edge,vexs);
+    cout<<"\n BFS: \n";
+    vector<vector<int>> matEdge{{0,1},{0,2},{1,2},{1,5},{2,3},{2,4}};  
+    solu.graphBfsMatrix(matEdge,vexs);
     cout<<"\n DFS: \n";
     solu.graphDfsTable(edge,vexs);
     //vector<int>a{1,2};
