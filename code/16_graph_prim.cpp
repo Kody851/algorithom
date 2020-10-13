@@ -60,15 +60,19 @@ class Solution{
 int main(){
     Solution solu;
     
-    vector<pair<int,int>>edge{{0,1},{0,2},{1,2},{1,5},{2,3},{2,4}};
+    vector<pair<int,int>>pedge{{0,1},{0,2},{1,2},{1,5},{2,3},{2,4}};
     vector<int>vexs{0,1,2,3,4,5};
-    for(auto i:edge){
+    for(auto i:pedge){
         cout<<i.first<<","<<i.second<<"\n";
     }   
     for(auto i:vexs){
         cout<<i<<" ";
     }
-
+    vector<vector<int>>edge{{0,1,1},{0,2,3},{1,2,1},{1,5,4},{2,3,3},{2,4,6}};
+    vector<int>res = solu.graphBfsMatrix(edge,vexs);
+    cout<<"\n最小生成树:\n";
+    for(auto i:res)
+        cout<<i<<",";
 	
     return 0;
 }
