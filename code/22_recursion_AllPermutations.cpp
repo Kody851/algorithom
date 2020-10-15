@@ -10,7 +10,7 @@ using namespace std;
 
 class Solution{
     public:
-        vector<string>getSubseq(string str){
+        vector<string>getPermutation(string str){
             vector<string>res;
             if(str.empty()){
                 return res;
