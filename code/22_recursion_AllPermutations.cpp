@@ -45,7 +45,7 @@ class Solution{
 
 int main(){
     Solution solu;
-    vector<string>res = solu.getSubseq("abc");
+    vector<string>res = solu.getPermutation("abc");
     cout<<"全排列：";
     for(auto i:res){
         cout<<i<<",";
