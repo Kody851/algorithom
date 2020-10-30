@@ -7,7 +7,7 @@ using namespace std;
 #include<stack>
 
 //KMP算法
-//
+//字符串匹配问题
 vector<int>getNextArray(string ms) {
 	if (ms.size() == 1) {
 		return vector<int>{-1};
