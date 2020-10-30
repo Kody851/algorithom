@@ -6,8 +6,9 @@ using namespace std;
 #include<vector>
 #include<stack>
 
-//并查集的实现
-//对于若干集合，实现isSameSet和union两个函数，且要O(1)
+//头条面试题
+//【题目】 一个矩阵中只有0和1两种值，每个位置都可以和自己的上、下、左、右 四个位置相连，
+//如果有一片1连在一起，这个部分叫做一个岛，求一个矩阵中有多少个岛?
 
 // 样本进来会包一层，叫做元素
 //因为hash表是值传递的，同样的值认为相同，改成这样，引用传递，就可以处理相同值了（仍然可以是两个元素，可以属于两个集合）
@@ -67,8 +68,38 @@ class UnionFindSet{
 				}
 			}
 		}
-
 };
+
+int countIslands(vector<vector<int> >m){
+	vector<string>list;
+	for(int i=0;i<m.size();i++){
+		for(int j=0;j<m[0].size();j++){
+			if(m[i][j]==1){
+				string pos = to_string(i) + "_" + to_string(j);//atoi("1")
+				list.push_back(pos);
+			}
+		}
+	}
+	UnionFindSet unionFindSet;
+	unionFindSet.init(list);//初始化每个1都是孤立的岛
+	for(int i=0;i<m.size();i++){
+		for(int j=0;j<m[0].size();j++){
+			if(m[i][j]==1){
+				string pos = to_string(i) + "_" + to_string(j);
+				if(i-1>=0 && m[i-1][j]==1){
+					string up = to_string(i-1) + "_" + to_string(j);
+					unionFindSet.Union(up,pos);
+				}
+				if(j+1<m[0].size() && m[i][j+1]==1){
+					string right = to_string(i) + "_" + to_string(j+1);
+					unionFindSet.Union(right,pos);
+				}
+			}
+		}
+	}
+	return unionFindSet.sizeMap.size();//unionFindSet.sizeMap里还存了每个岛屿1的个数
+	
+}
 int main(){
     UnionFindSet unionFindSet;
     vector<string>list{"a","b","c"};
@@ -81,5 +112,21 @@ int main(){
         cout<<iter->second->value<<"\n";
     }
     //cout<<unionFindSet.elementMap["a"]->value;
+	vector<vector<int> > m1 = {  { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, 
+				        		 { 0, 1, 1, 1, 0, 1, 1, 1, 0 }, 
+				        		 { 0, 1, 1, 1, 0, 0, 0, 1, 0 },
+				        		 { 0, 1, 1, 0, 0, 0, 0, 0, 0 }, 
+				        		 { 0, 0, 0, 0, 0, 1, 1, 0, 0 }, 
+				        		 { 0, 0, 0, 0, 1, 1, 1, 0, 0 },
+				        		 { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, };
+	vector<vector<int> > m2 = {  { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, 
+								 { 0, 1, 1, 1, 1, 1, 1, 1, 0 }, 
+								 { 0, 1, 1, 1, 0, 0, 0, 1, 0 },
+								 { 0, 1, 1, 0, 0, 0, 1, 1, 0 }, 
+								 { 0, 0, 0, 0, 0, 1, 1, 0, 0 }, 
+								 { 0, 0, 0, 0, 1, 1, 1, 0, 0 },
+								 { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, };
+	cout<<countIslands(m1)<<"\n";
+	cout<<countIslands(m2);
     return 0;
 }
