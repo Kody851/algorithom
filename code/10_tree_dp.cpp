@@ -40,17 +40,18 @@ public:
             max = ma;
         }
     };
+    //以x为头的树，返回InfoBST（3个信息）
     InfoBST* process(TreeNode* x){
         if(!x) return NULL;
         InfoBST* leftData = process(x->left);
         InfoBST* rightData = process(x->right);
         int min = x->val;
         int max = x->val;
-        if(!leftData){
+        if(leftData){
             min = min<leftData->min ? min : leftData->min;
             max = max>leftData->max ? max : leftData->max;
         }
-        if(!rightData){
+        if(rightData){
             min = min<rightData->min ? min : rightData->min;
             max = max>rightData->max ? max : rightData->max;
         }
@@ -194,7 +195,7 @@ int main(){
     head->left->left = new TreeNode(4);
     head->left->right = new TreeNode(5);
     Solution solu;
-    //cout<<"是二叉搜索树："<<solu.isBinarySearchTree(head);
+    cout<<"是二叉搜索树："<<solu.isBinarySearchTree(head)<<"\n";
     cout<<"是满二叉树："<<solu.isFullBinaryTree(head)<<"\n";
     cout<<"是平衡二叉树："<<solu.isBalanceTree(head);
     return 0;

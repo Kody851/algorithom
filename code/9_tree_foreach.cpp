@@ -63,11 +63,11 @@ public:
         stack<TreeNode*>s;
         TreeNode* cur = head;
         while(cur || !s.empty()){
-            if(cur){
+            if(cur){//阶段1，左边界依次压入，若cur为空，进入阶段2；
                 s.push(cur);
                 cur = cur->left;
             }
-            else{
+            else{//阶段2，栈顶弹出并打印，cur取做右子树
                 cout<<s.top()->val<<" ";
                 s.pop();
                 cur = cur->right;
