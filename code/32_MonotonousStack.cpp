@@ -22,10 +22,11 @@ void printVector(vector<int>arr){
 	for(;i<arr.size()-1;i++){
 		cout<<arr[i]<<",";
 	}
-	cout<<arr[i];
+	cout<<arr[i]<<"\n";
 }
+//不考虑重复数字
 vector<vector<int>> getNearLessNoRepeat(vector<int>arr){
-	vector<vector<int>> res(arr.size(),2);
+	vector<vector<int>> res(arr.size(),vector<int>(2));//注意二维数组的初始化方式
 	stack<int>stk;
 	for (int i = 0; i < arr.size(); i++) { // i -> arr[i]
 		while (!stk.empty() && arr[stk.top()] > arr[i]) {
@@ -47,8 +48,9 @@ vector<vector<int>> getNearLessNoRepeat(vector<int>arr){
 	}
 	return res;
 }
+//考虑重复数字
 vector<vector<int>> getNearLess(vector<int>arr){
-	vector<vector<int>> res(arr.size(),2);
+	vector<vector<int>> res(arr.size(),vector<int>(2));
 	stack<vector<int>>stk;
 	for (int i = 0; i < arr.size(); i++) { // i -> arr[i]
 		while (!stk.empty() && arr[stk.top()[0]] > arr[i]) {
@@ -79,6 +81,10 @@ vector<vector<int>> getNearLess(vector<int>arr){
 }
 int main(){
 	for(auto i: getNearLessNoRepeat({1,2,4,3})){
+		printVector(i);
+	}
+	cout<<"==============";
+	for(auto i: getNearLess({1,2,1,3})){
 		printVector(i);
 	}
     return 0;

@@ -186,6 +186,31 @@ public:
         return processLA(head,o1,o2)->findAns;
     }
     //==========================================================
+    //二叉树节点间的最大距离问题:
+    //从二叉树的节点a出发，可以向上或者向下走，但沿途的节点只能经过一次，到达节点b时路径上的节点个数叫作a到b的距离，
+    //那么二叉树任何两个节点之间都有距离，求整棵树上的最大距离。
+    class InfoDistance{
+    public:
+        int max;
+        int height;
+        InfoDistance(int m, int h){
+            max = m;
+            height = h;
+        }
+    };
+    InfoDistance* processDistance(TreeNode*x){
+        if(x==NULL) return new InfoDistance(0,0);
+        InfoDistance* leftData = processDistance(x->left);
+        InfoDistance* rightData = processDistance(x->right);
+        int max = (leftData->max > rightData->max) ? leftData->max : rightData->max;//max(a,b)
+        max = (max > leftData->height + rightData->height + 1) ? max : leftData->height + rightData->height + 1;
+        int height = (leftData->height > rightData->height) ? leftData->height + 1 : rightData->height + 1;
+        return new InfoDistance(max,height);
+    }
+    int maxDistance(TreeNode*head){
+        return processDistance(head)->max;
+    }
+    //==========================================================
 };
 
 int main(){
@@ -197,6 +222,7 @@ int main(){
     Solution solu;
     cout<<"是二叉搜索树："<<solu.isBinarySearchTree(head)<<"\n";
     cout<<"是满二叉树："<<solu.isFullBinaryTree(head)<<"\n";
-    cout<<"是平衡二叉树："<<solu.isBalanceTree(head);
+    cout<<"是平衡二叉树："<<solu.isBalanceTree(head)<<"\n";
+    cout<<"节点间的最大距离："<<solu.maxDistance(head);
     return 0;
 }
