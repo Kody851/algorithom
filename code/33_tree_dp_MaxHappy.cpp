@@ -1,5 +1,6 @@
+#include<iostream>
 #include<queue>
-#include<stack>
+#include<vector>
 #include<algorithm>//max
 #include<cmath>//abs
 using namespace std;
@@ -20,31 +21,51 @@ class Employee {
 class Node{
 public:
     int happy;//快乐值
-    vector<Node>next;//下级
-    Node(int h, vector<Node>n){
+    vector<Node*>nexts;//下级
+    Node(int h, vector<Node*>n){
         happy = h;
-        next = n;
+        nexts = n;
     }
 };
 class Info{
 public:
-    int headYes;//该节点来的最大快乐值
-    int headNo;
+    int headYes;//该节点来,整棵树的最大快乐值
+    int headNo;//该节点不来，整棵树的最大快乐值
     Info(int yes, int no){
         headYes = yes;
         headNo = no;
     }
 };
-Info* process(Node* x){
-    if(x->next.empty()){//基层员工
-        return new 
+Info* process(Node* x){//以x为老板，能获得的最大快乐值
+    if(x->nexts.empty()){//基层员工
+        return new Info(x->happy,0);
     }
+    int headYes = x->happy;
+    int headNo = 0;
+    for(auto next : x->nexts){//x的直接下属
+        Info* nextInfo = process(next);
+        headYes += nextInfo->headNo;//x来，下级不来
+        headNo += max(nextInfo->headNo,nextInfo->headYes);//x来，下级爱来不来
+    }
+    return new Info(headYes,headNo);
 }
 int maxHappy(Node* head){
-
+    if(!head) return 0;
+    return max(process(head)->headYes,process(head)->headNo);
 }
 
 int main(){
-
+    
+    Node* head = new Node(9,vector<Node*>{
+        new Node(13,vector<Node*>{new Node(1,vector<Node*>()), new Node(2,vector<Node*>())}),
+        new Node(2,vector<Node*>{new Node(10,vector<Node*>())})
+    });
+    /*
+            9 
+       13       2
+    1      2       10
+    */
+    cout<<maxHappy(head);//(13+10)
     return 0;
+    //考点：树形dp
 }
