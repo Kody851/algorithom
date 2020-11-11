@@ -15,8 +15,8 @@ using namespace std;
 //所以玩家A会先拿1， 让排列变为[2,100,4]，接下来玩家B不管怎么选，100都会被玩家 A拿走。玩家A会获胜， 分数为101。所以返回101。
 
 class Solution{
-    public:
-        int win(vector<int>arr) {
+public:
+	int win(vector<int>arr) {
 		if (arr.empty()) {
 			return 0;
 		}
@@ -34,7 +34,7 @@ class Solution{
 		if (i == j) {
 			return 0;//只剩一个时，后手是拿不到的
 		}
-		return min(f(arr, i + 1, j), f(arr, i, j - 1));//后手最大化 就是 先手最小化
+		return min(f(arr, i + 1, j), f(arr, i, j - 1));//先手拿i或者j，他的考虑是让后手的得分最小。此步的决定权在先手。
 	}
 
 };
