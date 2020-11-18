@@ -1,6 +1,7 @@
 #include<iostream>
 #include<queue>
 #include<stack>
+#include<vector>
 #include<unordered_set>
 #include<algorithm>//max
 #include<cmath>//abs
@@ -37,11 +38,32 @@ public:
 		return min(f(arr, i + 1, j), f(arr, i, j - 1));//先手拿i或者j，他的考虑是让后手的得分最小。此步的决定权在先手。
 	}
 
+	//DP
+	int winDP(vector<int>arr) {
+		if (arr.empty()) {
+			return 0;
+		}
+		int n = arr.size();
+		vector<vector<int>> dpF(n, vector<int>(n));
+		vector<vector<int>> dpS(n, vector<int>(n));
+		for(int j=0; j<n; j++){
+			for(int i=j; i>=0; i--){
+				if(i==j){
+					dpF[i][j] = arr[i];
+					dpS[i][j] = 0;
+				}
+				dpF[i][j] = max(arr[i]+dpS[i+1][j], arr[j]+dpS[i][j-1]);
+				dpS[i][j] = min(dpF[i+1][j], dpF[i][j-1]);
+			}
+		}
+		return max(dpF[0][n-1], dpS[0][n-1]);
+	}
+
 };
 
 int main(){
     Solution solu;
     cout<<"获胜分数："<<solu.win({1,2,100,4})<<"\n";
-
+	cout<<"DP获胜分数："<<solu.winDP({1,2,100,4})<<"\n";
     return 0;
 }
