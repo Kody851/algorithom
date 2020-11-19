@@ -44,15 +44,22 @@ public:
 			return 0;
 		}
 		int n = arr.size();
-		vector<vector<int>> dpF(n, vector<int>(n));
-		vector<vector<int>> dpS(n, vector<int>(n));
+		//dpF[i][j]:  arr[i..j]上，先手的最大得分；
+		//dpS[i][j]:  arr[i..j]上，后手的最大得分
+		//vector<vector<int>> dpF(n, vector<int>(n));
+		//vector<vector<int>> dpS(n, vector<int>(n));
+		int dpF[n][n]; //= {{}};
+		int dpS[n][n]; //= {{}};
+		//i时的值与i+1有关，因此i从大到小遍历，另外i<=j;
+		//j时的值与j-1有关，因此j从小到大遍历
 		for(int j=0; j<n; j++){
 			for(int i=j; i>=0; i--){
 				if(i==j){
 					dpF[i][j] = arr[i];
 					dpS[i][j] = 0;
 				}
-				dpF[i][j] = max(arr[i]+dpS[i+1][j], arr[j]+dpS[i][j-1]);
+				if(i+1<n)
+					dpF[i][j] = max(arr[i]+dpS[i+1][j], arr[j]+dpS[i][j-1]);
 				dpS[i][j] = min(dpF[i+1][j], dpF[i][j-1]);
 			}
 		}
