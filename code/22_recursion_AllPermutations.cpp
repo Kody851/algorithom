@@ -38,8 +38,7 @@ class Solution{
                     next.erase(next.begin() + index);
                     process(next, path+available[index], res);
                 }
-            }
-                
+            }               
         }
 };
 
