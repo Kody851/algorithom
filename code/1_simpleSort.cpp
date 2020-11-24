@@ -8,6 +8,12 @@ void mySwap(vector<int> &arr, int i, int j) {
 		arr[i] = arr[j];
 		arr[j] = tmp;
 }
+//不用辅助空间实现交换
+void swap_withoutSpace(vector<int>&arr, int i, int j) {
+        arr[i] = arr[i] ^ arr[j];
+        arr[j] = arr[i] ^ arr[j];
+        arr[i] = arr[i] ^ arr[j];
+}
 //选择排序
 void selectionSort(vector<int>&arr) {
 	if (arr.empty() || arr.size() < 2) {
@@ -27,6 +33,7 @@ void bubbleSort(vector<int>&arr) {
 	if (arr.empty() || arr.size() < 2) {
 		return;
 	}
+	//最大值不停往后移，小数冒泡到前面
 	for (int e = arr.size() - 1; e > 0; e--) { // 0 ~ e
 		for (int i = 0; i < e; i++) {
 			if (arr[i] > arr[i + 1]) {

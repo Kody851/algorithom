@@ -4,14 +4,10 @@
 using namespace std;
 /*1、递归让左半边有序、右半边有序；2、两边归并，用1个辅助空间，两个指针分别从两边最小值开始，
 哪个小就拷贝至辅助空间，同时指针右移; 3、全拷贝完，把辅助空间拷贝回原数组*/
-void mySwap(vector<int> &arr, int i, int j) {
-		int tmp = arr[i];
-		arr[i] = arr[j];
-		arr[j] = tmp;
-}
+
 void merge(vector<int> &arr, int L, int M, int R) {
 	vector<int>help(R - L + 1);
-	//int[] help = new int[R - L + 1];
+	//int help[R - L + 1];
 	int i = 0;
 	int p1 = L;
 	int p2 = M + 1;
