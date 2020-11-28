@@ -8,10 +8,25 @@ void mySwap(vector<int>&arr, int i, int j){
     arr[j] = tmp;
 }
 void heapInsert(vector<int>&arr, int i){
-    
+    while(arr[i] > arr[(i-1)/2]){
+        mySwap(arr, i, (i-1)/2);
+        i = (i-1)/2;
+    }
+}
+void heapify(vector<int>&arr, int i, int heapSize){
+    int left = 2*i+1;
+    while(left < heapSize){
+        int max = (left+1<heapSize && arr[left+1]>arr[left]) ? left+1 : left;
+        if(arr[i] >= arr[max]){
+            break;
+        }
+        mySwap(arr, i, max);
+        i = max;
+        left = 2*1+1;
+    }
 }
 void heapSort(vector<int>&arr){
-    if(arr.size()<2) return;
+    if(arr.empty() || arr.size()<2) return;
     for(int i=0;i<arr.size();i++){
         heapInsert(arr, i);
     }

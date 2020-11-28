@@ -21,8 +21,9 @@ void heapify(vector<int>&arr, int index, int heapSize){
     int left = 2*index+1;
     while(left<heapSize){
         int max = left+1<heapSize && arr[left+1]>arr[left] ? left+1 : left;
-        max = arr[max]>arr[index] ? max : index;
-        if(max==index) break;
+        if(arr[index] >= arr[max]){
+            break;
+        }
         mySwap(arr, index, max);
         index = max;
         left = 2*index+1;
