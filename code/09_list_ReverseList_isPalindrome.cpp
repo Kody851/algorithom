@@ -1,7 +1,7 @@
 #include<iostream>
 #include<stack>
 using namespace std;
-//反转链表、判断是否回文
+//反转链表、判断链表是否回文
 //IsPalindromeList
 struct ListNode {
 	int val;
@@ -24,6 +24,7 @@ public:
         ListNode *cur=pHead;
         ListNode *pre=NULL;
         ListNode *tmp=NULL;
+        //ListNode *cur = phead, *tmp = NULL, *pre = NULL;
         while(cur){
             tmp=cur->next;
             cur->next=pre;
@@ -67,35 +68,36 @@ public:
 			n2 = n2->next->next; // n2 -> end
 		}
         //中点右边，链表反转
-		n2 = n1->next; // n2 -> right part first node
+        ListNode*pre = n1;
+		ListNode*cur = n1->next; // n2 -> right part first node
+        ListNode*tmp = NULL;
 		n1->next = NULL; // mid.next -> null
-		ListNode* n3 = NULL;
-		while (n2 != NULL) { // right part convert
-			n3 = n2->next; // n3 -> save next node
-			n2->next = n1; // next of right node convert
-			n1 = n2; // n1 move
-			n2 = n3; // n2 move
+		while (cur != NULL) { // right part convert
+			tmp = cur->next; // n3 -> save next node
+			cur->next = pre; // next of right node convert
+			pre = cur; // n1 move
+			cur = tmp; // n2 move
 		}
-		n3 = n1; // n3 -> save last node
-		n2 = head;// n2 -> left first node
+        //判断回文
+        ListNode *left = head, *right = pre;
 		bool res = true;
-		while (n1 != NULL && n2 != NULL) { // check palindrome
-			if (n1->val != n2->val) {
+		while (left != NULL && right != NULL) { // check palindrome
+			if (left->val != right->val) {
 				res = false;
 				break;
 			}
-			n1 = n1->next; // left to mid
-			n2 = n2->next; // right to mid
+			left = left->next; // left to mid
+			right = right->next; // right to mid
 		}
         //中点右边再反转回来
-		n1 = n3->next;
-		n3->next = NULL;
-		while (n1 != NULL) { // recover list
-			n2 = n1->next;
-			n1->next = n3;
-			n3 = n1;
-			n1 = n2;
-		}
+        cur = pre;
+        pre = NULL;
+        while(cur){
+            tmp = cur->next;
+            cur->next = pre;
+            pre = cur;
+            cur = tmp;
+        }
 		return res;
     }
 };

@@ -18,38 +18,36 @@ public:
 			return NULL;
 		}
 		ListNode* cur = head;
-		ListNode* next = NULL;
+		ListNode* tmp = NULL;
 		// copy node and link to every node
-		// 1 -> 2
-		// 1 -> 1' -> 2
-		while (cur != NULL) {
-			next = cur->next;
+		//1->2   =>    1->1'->2->2'
+		while (cur) {
+			tmp = cur->next;
 			cur->next = new ListNode(cur->val);
-			cur->next->next = next;
-			cur = next;
+			cur->next->next = tmp;
+			cur = tmp;
 		}
+		//rand
 		cur = head;
-		ListNode* curCopy = NULL;
-		// set copy node rand
-		// 1 -> 1' -> 2 -> 2'
-		while (cur != NULL) {
-			next = cur->next->next;
-			curCopy = cur->next;
-			curCopy->rand = cur->rand != NULL ? cur->rand->next : NULL;
-			cur = next;
+		while(cur){
+			cur->next->rand = cur->rand ? cur->rand->next : NULL;
+			cur = cur->next->next;
 		}
-		ListNode* res = head->next;
+
+		//1->1'->2->2' => 1->2 ,  1'->2'.   return 1'->2'
 		cur = head;
-		// split
-		while (cur != NULL) {
-			next = cur->next->next;
-			curCopy = cur->next;
-			cur->next = next;
-			curCopy->next = next != NULL ? next->next : NULL;
-			cur = next;
-		}
+		ListNode*res = head->next;
+		while(cur){
+			tmp = cur->next->next;
+			cur->next->next = tmp ? tmp->next : NULL;
+			cur->next = tmp;
+			cur = tmp;
+		}    
 		return res;
 	}
+
+
+	//hash表法
     ListNode* copyListWithRand2(ListNode* head) {
         unordered_map<ListNode*,ListNode*>hashmap;
 		ListNode* cur = head;

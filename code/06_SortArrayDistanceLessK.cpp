@@ -11,7 +11,7 @@ void sortedArrDistanceLessK(vector<int>& arr, int k) {
     //https://blog.csdn.net/weixin_36888577/article/details/79937886
     //priority_queue<int, vector<int>, less<int> > heap;//大顶堆
     int index = 0;
-    for (; index <= (arr.size()<k ? arr.size() : k); index++) {
+    for (; index <= (arr.size()<k ? arr.size() : k); index++) {//若k=7，则把数组[0..7]前8个数放到小根堆里
         heap.push(arr[index]);
     }
     int i = 0;
@@ -37,3 +37,4 @@ int main(){
 	printVector(arr);
 	return 0;
 }
+

@@ -41,7 +41,7 @@ int main(){
     // 遍历
     map<string, int>::iterator iter;
     for(iter=dict.begin();iter!=dict.end();iter++)
-        cout<<iter->first<<ends<<iter->second<<endl;
+        cout<<iter->first<<","<<iter->second<<endl;
   
     // 查找
     if((iter=dict.find("banana"))!=dict.end()) //  返回一个迭代器指向键值为key的元素，如果没找到就返回end()
