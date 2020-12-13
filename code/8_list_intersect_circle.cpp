@@ -3,7 +3,7 @@
 #include<unordered_set>
 using namespace std;
 /*===链表集大成====
-给定两个可能有环也可能无环的单链表， 头节点head1和head2。 请实
+【题目】 给定两个可能有环也可能无环的单链表， 头节点head1和head2。 请实
 现一个函数， 如果两个链表相交， 请返回相交的 第一个节点。 如果不相交， 返
 回NULL。
 【 要求】 如果两个链表长度之和为N， 时间复杂度请达到O(N)， 额外空间复杂度
@@ -18,7 +18,8 @@ struct ListNode {
 };
 class Solution{
 public:
-    //两个链表(有无环未知)第一个公共(相交的)节点
+	
+    //主问题：两个链表(有无环未知),求第一个公共(相交的)节点
     ListNode* getIntersectNode(ListNode* head1, ListNode* head2) {
 		if (head1 == NULL || head2 == NULL) {
 			return NULL;
@@ -31,10 +32,10 @@ public:
 		if (loop1 != NULL && loop2 != NULL) {
 			return bothLoop(head1, loop1, head2, loop2);
 		}
-		return NULL;
+		return NULL;//有环和无环的2个链表肯定没有公共点
 	}
-
-	// 找到链表第一个入环节点，如果无环，返回null
+	
+	//子问题1： 一个链表头节点为head，找到该链表第一个入环节点，如果无环，返回null
 	ListNode* getLoopNode(ListNode* head) {
 		if (head == NULL || head->next == NULL || head->next->next == NULL) {
 			return NULL;
@@ -76,7 +77,7 @@ public:
         return n1;
 	}
 
-	// 如果两个链表都无环，返回第一个相交节点，如果不想交，返回null
+	//子问题2： 如果两个链表都无环，返回第一个相交节点，如果不想交，返回null
 	ListNode* noLoop(ListNode* head1, ListNode* head2) {
 		if (head1 == NULL || head2 == NULL) {
 			return NULL;
@@ -104,12 +105,16 @@ public:
 			cur1 = cur1->next;
 		}
 		while (cur1 != cur2) {
+			if(cur1->next==NULL || cur2->next==NULL){
+            	return NULL;
+        	}
 			cur1 = cur1->next;
 			cur2 = cur2->next;
 		}
 		return cur1;
 	}
-	ListNode* FindFirstCommonNode( ListNode* pHead1, ListNode* pHead2) {//noLoop的hasn版本
+	//noLoop的hash版本
+	ListNode* FindFirstCommonNode( ListNode* pHead1, ListNode* pHead2) {
           if(pHead1==NULL||pHead2==NULL) return NULL;
           unordered_set<ListNode*> hashset;
           ListNode *pNode1=pHead1,*pNode2=pHead2;
@@ -128,11 +133,12 @@ public:
           return NULL;
     }
 
-	// 两个有环链表，返回第一个相交节点，如果不想交返回null
+	// 子问题3：两个有环链表，返回第一个相交节点，如果不相交返回null
 	ListNode* bothLoop(ListNode* head1, ListNode* loop1, ListNode* head2, ListNode* loop2) {
 		ListNode* cur1 = NULL;
 		ListNode* cur2 = NULL;
-		if (loop1 == loop2) {//入环节点相同（Y+O）
+		//分3种情况
+		if (loop1 == loop2) {//（1）入环节点相同（Y+O）
 			cur1 = head1;
 			cur2 = head2;
 			int n = 0;
@@ -157,7 +163,7 @@ public:
 			}
 			return cur1;
 		} 
-		else {//入环节点不同（-O-）
+		else {//（2）入环节点不同（-O-）
 			cur1 = loop1->next;
 			while (cur1 != loop1) {
 				if (cur1 == loop2) {
@@ -165,7 +171,7 @@ public:
 				}
 				cur1 = cur1->next;
 			}
-			return NULL;//-O -O不相交
+			return NULL;//（3）-O -O 不相交
 		}
 	}
 
