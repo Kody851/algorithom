@@ -22,7 +22,7 @@ class Solution{
             if(i==str.size()){
                 return 1;
             }
-            if(str[i]=='0'){
+            if(str[i]=='0'){//异常值
                 return 0;
             }
             if(str[i]=='1'){
@@ -46,7 +46,7 @@ class Solution{
 
 int main(){
     Solution solu;
-    int res = solu.numStrConvert("127");
+    int res = solu.numStrConvert("126");
     cout<<"转化结果数量："<<res;
     return 0;
 }

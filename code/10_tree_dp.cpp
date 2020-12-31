@@ -146,12 +146,12 @@ public:
         //对于每个节点不能有右无左 && 在层次遍历时，一旦遇到孩子不双全的节点，后续所有节点必须是叶节点
     }
     //==========================================================
-    //给定两个二叉树的节点node1和node2，找到他们的最低公共祖先节点
+    //二叉树的头结点为head，给定树上的两个节点node1和node2，向上找到他们的最低公共祖先节点
     class InfoLA{
         public:
-            bool findo1;
+            bool findo1;//发现o1节点
             bool findo2;
-            TreeNode *findAns;
+            TreeNode *findAns;//最低公共祖先节点
             InfoLA(bool f1,bool f2,TreeNode* f){
                 findo1 = f1;
                 findo2 = f2;
@@ -191,8 +191,8 @@ public:
     //那么二叉树任何两个节点之间都有距离，求整棵树上的最大距离。
     class InfoDistance{
     public:
-        int max;
-        int height;
+        int max;//二叉树节点间的最大距离问题
+        int height;//二叉树的高度
         InfoDistance(int m, int h){
             max = m;
             height = h;

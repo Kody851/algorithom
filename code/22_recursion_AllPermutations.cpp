@@ -22,9 +22,10 @@ class Solution{
             process(available, "", res);
             return res;
         }
+        //从左往右的尝试模型
         //available中的所有字符都可以选择
         //形成的所有排列(即沿途的决定path)放入res
-        void process(vector<char>&available,  string path, vector<string>&res){
+        void process(vector<char>available,  string path, vector<string>&res){
             if(available.empty()){
                 res.push_back(path);
                 return;

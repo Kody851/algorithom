@@ -114,7 +114,7 @@ public:
 		return cur1;
 	}
 	//noLoop的hash版本
-	ListNode* FindFirstCommonNode( ListNode* pHead1, ListNode* pHead2) {
+	ListNode* noLoopHash( ListNode* pHead1, ListNode* pHead2) {
           if(pHead1==NULL||pHead2==NULL) return NULL;
           unordered_set<ListNode*> hashset;
           ListNode *pNode1=pHead1,*pNode2=pHead2;

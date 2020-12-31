@@ -3,6 +3,8 @@
 #include<stack>
 using namespace std;
 
+
+
 struct TreeNode {
     int val;
     struct TreeNode *left;
@@ -11,6 +13,31 @@ struct TreeNode {
             val(x), left(NULL), right(NULL) {
     }
 };
+
+class Info{
+    int h;
+    int n;
+    Info(int x, int y){
+        h = x;
+        n = y;
+    }
+};
+Info*process(TreeNode*x){
+    if(!x) return new Info(0,0);
+    Info*leftData = process(x->left);
+    Info*rightData = process(x->right);
+    int h = (leftData->h > rightData->h ? leftData->h : rightData->h) + 1;
+    int n = leftData->n + rightData->n +1;
+    return new Info(h,n);
+}
+bool isMan(TreeNode*head){
+    if(!head) return true;
+    int h = process(head)->h;
+    int n = process(head)->n;
+    return n==pow(2,h);  1<<h
+}
+
+
 class Solution{
 public:
     //递归，先序
@@ -22,6 +49,15 @@ public:
 		preOrderRecur(head->left); 
 		preOrderRecur(head->right);
 	}
+    void post(TreeNode*head){
+        if(!head) return;
+        stack<TreeNode*>s1;
+        stack<TreeNode*>s2;
+        s1.push(head);
+        while(!s1.empty()){
+
+        }
+    }
     //递归，中序
     void inOrderRecur(TreeNode* head) {
 		if (head == NULL) {
@@ -68,9 +104,8 @@ public:
                 cur = cur->left;
             }
             else{//阶段2，栈顶弹出并打印，cur取做右子树
-                cur = s.top();
+                cout<<s.top()->val<<" ";
                 s.pop();
-                cout<<cur->val<<" ";               
                 cur = cur->right;
             } 
         } 
@@ -98,6 +133,16 @@ public:
             s2.pop();
         }
     }
+
+    
+
+
+
+
+
+
+
+
     //层次遍历（宽度优先遍历）
     void levelForeach(TreeNode* head){
         if(!head) return;
@@ -140,6 +185,13 @@ public:
         return max;
     }
 };
+#include<queue>
+priority_queue<int, vector<int>, greater<int> > heap;
+for(auto i: arr){
+    heap.push(i);
+}
+
+
 
 int main(){
     TreeNode* head = new TreeNode(1);

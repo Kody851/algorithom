@@ -3,6 +3,13 @@
 #include<stack>
 #include<regex>
 using namespace std;
+/*
+二叉树的序列化和反序列化 
+就是内存里的一棵树如何变成字符串形式，又如何从字符串形式变成内存里的树 
+如何判断一颗二叉树是不是另一棵二叉树的子树？
+*/
+
+
 
 struct TreeNode {
     int val;
