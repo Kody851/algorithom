@@ -21,10 +21,11 @@ class Element {
 class UnionFindSet{
     public:
         unordered_map<string, Element*> elementMap;
-		// key  某个元素  value 该元素的父
+		// key:某个元素 -> value:该元素的父
 		unordered_map<Element*, Element*> fatherMap;
-		// key 某个集合的代表元素   value 该集合的大小
+		// key:某个集合的代表元素  ->  value: 该集合的大小
 		unordered_map<Element*, int> sizeMap;
+
 
 		void init(vector<string> list) {
 			for (string value : list) {
@@ -80,6 +81,6 @@ int main(){
         cout<<iter->first<<"->";
         cout<<iter->second->value<<"\n";
     }
-    //cout<<unionFindSet.elementMap["a"]->value;
+    cout<<unionFindSet.elementMap["a"]->value;
     return 0;
 }

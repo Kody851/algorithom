@@ -24,19 +24,31 @@ class Pool{
             if(key_index.count(key)){
                 /*
                 举例：
+                key<->index关系如下：
                 "a" <-> 0
                 "b" <-> 1
                 "c" <-> 2
+                "d" <-> 3
+                现在要删除"b"
+                为了节省空间，为了能够实现getRandom()功能，index不能有空缺
+                因此，步骤为：
+                (1)找到要删除的key的index，即1;
+                (2)找到最末尾的index和key，即3和"d";
+                (3)"d" <-> 1 ;
+                (4)删除"b"、3.
+                "a" <-> 0
+                "d" <-> 1
+                "c" <-> 2
                 */
                 int deleteIndex = key_index[key];//1
-                int lastIndex = key_index.size()-1;//2
-                string lastKey = index_key[lastIndex];//"c"
+                int lastIndex = key_index.size()-1;//3
+                string lastKey = index_key[lastIndex];//"d"
 
-                key_index[lastKey] = deleteIndex;//["c"]=1
+                key_index[lastKey] = deleteIndex;//["d"]=1
                 key_index.erase(key);//删掉"b"
 
-                index_key[deleteIndex] = lastKey;//[1]="c"
-                index_key.erase(2);//删掉2
+                index_key[deleteIndex] = lastKey;//[1]="d"
+                index_key.erase(lastIndex);//删掉3
 
             }
         }

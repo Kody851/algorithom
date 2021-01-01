@@ -12,63 +12,6 @@ using namespace std;
 
 // 样本进来会包一层，叫做元素
 //因为hash表是值传递的，同样的值认为相同，改成这样，引用传递，就可以处理相同值了（仍然可以是两个元素，可以属于两个集合）
-class Element {
-	public:
-        string value;
-		Element(string v) {
-			value = v;
-		}
-};
-class GeneralUnionFindSet{
-    public:
-        unordered_map<string, Element*> elementMap;
-		// key  某个元素  value 该元素的父
-		unordered_map<Element*, Element*> fatherMap;
-		// key 某个集合的代表元素   value 该集合的大小
-		unordered_map<Element*, int> sizeMap;
-
-		void init(vector<string> list) {
-			for (string value : list) {
-				Element* element = new Element(value);
-				elementMap[value] = element;
-				fatherMap[element] = element;//初始每个点指向自己
-				sizeMap[element] = 1;
-			}
-		}
-        // 给定一个element，往上一直找，把代表元素返回
-		Element* findHead(Element* element) {
-			stack<Element*> path;
-			while (element != fatherMap[element]) {
-				path.push(element);
-				element = fatherMap[element];
-			}
-			//沿途各点的父改到代表元素，此步是为了降低时间复杂度
-			while (!path.empty()) {
-				fatherMap[path.top()] = element;
-                path.pop();
-			}
-			return element;
-		}
-        bool isSameSet(string a, string b) {
-			if (elementMap.count(a) && elementMap.count(b)) {
-				return findHead(elementMap[a]) == findHead(elementMap[b]);
-			}
-			return false;
-		}
-        void Union(string a, string b) {
-			if (elementMap.count(a) && elementMap.count(b)) {
-				Element* aF = findHead(elementMap[a]);
-				Element* bF = findHead(elementMap[b]);
-				if (aF != bF) {
-					Element* big = sizeMap[aF] >= sizeMap[bF] ? aF : bF;
-					Element* small = big == aF ? bF : aF;
-					fatherMap[small] = big;
-					sizeMap[big] = sizeMap[aF] + sizeMap[bF];
-					sizeMap.erase(small);
-				}
-			}
-		}
-};
 class UnionFindSet{
 public:
 	unordered_map<string,string>fatherMap;
@@ -109,36 +52,34 @@ public:
 		
 	}
 };
-int countIslands(vector<vector<int> >m){
+int countIslands(vector<vector<int>>m){
 	if(m.empty()) return 0;
 	vector<string>list;
 	for(int i=0;i<m.size();i++){
 		for(int j=0;j<m[0].size();j++){
 			if(m[i][j]==1){
-				string pos = to_string(i) + "_" + to_string(j);//atoi("1")
-				list.push_back(pos);
+				list.push_back(to_string(i) + "_" + to_string(j));
 			}
 		}
 	}
 	UnionFindSet unionFindSet;
-	unionFindSet.init(list);//初始化每个1都是孤立的岛
+	unionFindSet.init(list);
 	for(int i=0;i<m.size();i++){
 		for(int j=0;j<m[0].size();j++){
 			if(m[i][j]==1){
 				string pos = to_string(i) + "_" + to_string(j);
-				if(i-1>=0 && m[i-1][j]==1){//与上边相连的1合并
+				if(i-1>=0 && m[i-1][j]==1){
 					string up = to_string(i-1) + "_" + to_string(j);
-					unionFindSet.Union(up,pos);
+					unionFindSet.Union(pos, up);
 				}
-				if(j+1<m[0].size() && m[i][j+1]==1){//与右边相连的1合并
+				if(j+1<m[0].size() && m[i][j+1]==1){
 					string right = to_string(i) + "_" + to_string(j+1);
-					unionFindSet.Union(right,pos);
+					unionFindSet.Union(pos, right);
 				}
 			}
 		}
 	}
-	return unionFindSet.sizeMap.size();//unionFindSet.sizeMap里还存了每个岛屿1的个数
-	
+	return unionFindSet.sizeMap.size();
 }
 int main(){
 	vector<vector<int> > m1 = {  { 0, 0, 0, 0, 0, 0, 0, 0, 0 }, 
